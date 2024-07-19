@@ -12,12 +12,35 @@ Evaluate the impact of image resolution on segmentation accuracy with different 
 
 ### Diagram
 
-**TODO** Insert diagram with general overview.
+This flowchart provides the approach to prepare the data, train the models, and evaluate their performance.  
+
+![Overview diagram](imgs/ADLM-poster-diagram.png)
+
+#### Data Preprocessing
+
+1. **Reorientation (raw, derivatives) to RAS**: This step involves reorienting the raw data and its derivatives to a standard coordinate system, often referred to as RAS (Right-Anterior-Superior).
+2. **Labels conversion (instance->semantic)**: This step involves converting instance labels to semantic labels, which is often required in semantic segmentation tasks.
+3. **Rescaling isotropic and anisotropic**: This step involves rescaling the data, which can be done in both isotropic (equal in all directions) and anisotropic (different in different directions) manners.
+
+    After these preprocessing steps, the data is in the “nnU-Net dataset format.”
+
+#### Evaluation
+
+1. **Model resolution**: This step involves evaluating the model at its trained resolution.
+2. **Native**: This step involves evaluating the model at its native resolution.
+
+#### Training
+
+1. **nnU-Net preprocessing**: This step involves additional preprocessing specific to the nnU-Net framework.
+2. **Train different resolutions and epochs**: This step involves training the model at different resolutions and for different numbers of epochs.
 
 ### Dataset
 
-We are using the SPIDER dataset already normalized. The steps to download it are in the next steps.
-> Ask Hendrik about this? How to access it? Shall we upload it to Google Drive?
+We are using the SPIDER dataset already normalized (0-1500). 
+
+Original data are available on [Zenodo](https://zenodo.org/records/10159290).
+
+
 
 ## Prerrequisites
 
@@ -27,9 +50,7 @@ This installation assumes the following preconditions:
 - Conda environment (24.1.2)
 - Python 3.9
 
-## Project goal
 
-Evaluate the impact of image resolution on segmentation accuracy with different resolutions generated from the SPIDER dataset (Semantic Segmentation + Instance Segmentation).
 
 ## Setup
 
@@ -41,19 +62,18 @@ Access this [setup file](setup.md) to configure your environment.
 
 **Ensure you are working in the `segmentation` directory you created before.**
 
-#### Download normalized dataset
-
-First, let's download the dataset.
-> TODO: add instructions to download the dataset, probably from google drive.
+Assuming the dataset is downloaded, proceed with the next steps:
 
 - Create a folder and name it `dataset-spider`
-- Download the dataset in this directory
+- Move the dataset in this directory
+- You need to create two folders: `rawdata_normalized` and `derivatives_spider_new`.
+
 
 #### Merge modalities
 
-In this step, we need to merge the modalities T1w, T2W, and T2w_acq_iso in order to use the full dataset. Ensure your dataset has this structure:
+In this step, we need to ensure the dataset has this structure to manage the modalities T1w, T2W, and T2w_acq_iso.
 <details>
-<summary>Click to see the directory with the raw images structure. It contains the subjects from the three modalities.</summary>
+<summary>Click to see the directory with the raw image structure. It contains the subjects from the three modalities.</summary>
 
 ```bash
 rawdata_normalized
@@ -92,6 +112,60 @@ rawdata_normalized
 │   └── T2w
 │       ├── sub-0007_acq-iso_T2w.nii.gz
 │       └── sub-0007_T2w.nii.gz
+...
+```
+
+```bash
+derivatives_spider_new
+├── sub-0001
+│   ├── T1w
+│   │   ├── sub-0001_mod-T1w_seg-spider_msk.nii.gz
+│   │   ├── sub-0001_mod-T1w_seg-subreg_msk.nii.gz
+│   │   └── sub-0001_mod-T1w_seg-vert_msk.nii.gz
+│   └── T2w
+│       ├── sub-0001_mod-T2w_seg-spider_msk.nii.gz
+│       ├── sub-0001_mod-T2w_seg-subreg_msk.nii.gz
+│       └── sub-0001_mod-T2w_seg-vert_msk.nii.gz
+├── sub-0002
+│   ├── T1w
+│   │   ├── sub-0002_mod-T1w_seg-spider_msk.nii.gz
+│   │   ├── sub-0002_mod-T1w_seg-subreg_msk.nii.gz
+│   │   └── sub-0002_mod-T1w_seg-vert_msk.nii.gz
+│   └── T2w
+│       ├── sub-0002_mod-T2w_seg-spider_msk.nii.gz
+│       ├── sub-0002_mod-T2w_seg-subreg_msk.nii.gz
+│       └── sub-0002_mod-T2w_seg-vert_msk.nii.gz
+├── sub-0003
+│   ├── T1w
+│   │   ├── sub-0003_mod-T1w_seg-spider_msk.nii.gz
+│   │   ├── sub-0003_mod-T1w_seg-subreg_msk.nii.gz
+│   │   └── sub-0003_mod-T1w_seg-vert_msk.nii.gz
+│   └── T2w
+│       ├── sub-0003_mod-T2w_seg-spider_msk.nii.gz
+│       ├── sub-0003_mod-T2w_seg-subreg_msk.nii.gz
+│       └── sub-0003_mod-T2w_seg-vert_msk.nii.gz
+├── sub-0004
+│   ├── T1w
+│   │   ├── sub-0004_mod-T1w_seg-spider_msk.nii.gz
+│   │   ├── sub-0004_mod-T1w_seg-subreg_msk.nii.gz
+│   │   └── sub-0004_mod-T1w_seg-vert_msk.nii.gz
+│   └── T2w
+│       ├── sub-0004_mod-T2w_seg-spider_msk.nii.gz
+│       ├── sub-0004_mod-T2w_seg-subreg_msk.nii.gz
+│       └── sub-0004_mod-T2w_seg-vert_msk.nii.gz
+├── sub-0005
+│   ├── T1w
+│   │   ├── sub-0005_mod-T1w_seg-spider_msk.nii.gz
+│   │   ├── sub-0005_mod-T1w_seg-subreg_msk.nii.gz
+│   │   └── sub-0005_mod-T1w_seg-vert_msk.nii.gz
+│   └── T2w
+│       ├── sub-0005_acq-iso_mod-T2w_seg-spider_msk.nii.gz
+│       ├── sub-0005_acq-iso_mod-T2w_seg-subreg_msk.nii.gz
+│       ├── sub-0005_acq-iso_mod-T2w_seg-vert_msk.nii.gz
+│       ├── sub-0005_mod-T2w_seg-spider_msk.nii.gz
+│       ├── sub-0005_mod-T2w_seg-subreg_msk.nii.gz
+│       └── sub-0005_mod-T2w_seg-vert_msk.nii.gz
+...
 ```
 
 </details>  
