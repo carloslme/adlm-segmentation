@@ -46,8 +46,8 @@ Access this [setup file](setup.md) to configure your environment.
 First, let's download the dataset.
 > TODO: add instructions to download the dataset, probably from google drive.
 
-* Create a folder and name it `dataset-spider`
-* Download the dataset in this directory
+- Create a folder and name it `dataset-spider`
+- Download the dataset in this directory
 
 #### Merge modalities
 
@@ -101,3 +101,9 @@ rawdata_normalized
 We need to reorient the images to a unique orientation, let's do it to RAS (RAS means that the first dimension orients towards ***R***ight, the second dimension orients towards ***A***nterior, the third dimension orients towards ***S***uperior.)
 
 Access this [reorientation.md](reorientation.md) file and follow to instructions to reorient the data.
+
+#### nnU-Net dataset format
+
+Convert the full dataset to the nnU-Net format, according to the official documentation [dataset format](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/dataset_format.md).
+
+Access this [dataset_format.md](dataset_format.md) file and follow to instructions to convert the full data.
