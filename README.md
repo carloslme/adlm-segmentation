@@ -36,21 +36,17 @@ This flowchart provides the approach to prepare the data, train the models, and 
 
 ### Dataset
 
-We are using the SPIDER dataset already normalized (0-1500). 
+We are using the SPIDER dataset already normalized (0-1500).
 
 Original data are available on [Zenodo](https://zenodo.org/records/10159290).
 
-
-
-## Prerrequisites
+## Prerequisites
 
 This installation assumes the following preconditions:
 
 - Linux environment (this was developed in Ubuntu 22.04.4 LTS)
 - Conda environment (24.1.2)
 - Python 3.9
-
-
 
 ## Setup
 
@@ -67,7 +63,6 @@ Assuming the dataset is downloaded, proceed with the next steps:
 - Create a folder and name it `dataset-spider`
 - Move the dataset in this directory
 - You need to create two folders: `rawdata_normalized` and `derivatives_spider_new`.
-
 
 #### Merge modalities
 
@@ -183,6 +178,14 @@ Convert the full dataset to the nnU-Net format, according to the official docume
 Access this [dataset_format.md](dataset_format.md) file and follow to instructions to convert the full data.
 
 #### Convert labels
+
 The goal here is to convert the 14 labels in the derivatives to only 3 for simplicity (instance->semantic).
 
 Access this script [convert_labels.md](convert_labels.md) file and follow to instructions to convert the labels.
+
+##### Intermediate steps
+
+Some intermediate steps have to be done.
+
+- **Test data**  
+    We need to split the data before training and validating. Access this [make_test_data.md](make_test_data.md) file and follow to instructions to split the dataset.
