@@ -189,3 +189,6 @@ Some intermediate steps have to be done.
 
 - **Test data**  
     We need to split the data before training and validating. Access this [make_test_data.md](make_test_data.md) file and follow to instructions to split the dataset.
+- **Make JSON file**  
+    We need to provide a JSON file with metadata to the nnUNet model to preprocess and validate the dataset.
+    Access this [make_json_file.md](make_json_file.md) file and follow to instructions to make the JSON file.
