@@ -198,9 +198,17 @@ Some intermediate steps have to be done.
 - **Isotropic**  
     In isotropic scaling, the voxels (volume pixels) in the image have equal dimensions in all three directions (x, y, and z).
 
-    Access this [rescale_isotropic.md](rescale_isotropic.md) file and follow to instructions to split the dataset.
+    Access this [rescale_isotropic.md](rescale_isotropic.md) file and follow to instructions to rescale the dataset.
 
 - **Anisotropic**  
     In anisotropic scaling, the spacing between voxels varies between spatial dimensions.
 
-    Access this [rescale_anisotropic.md](rescale_anisotropic.md) file and follow to instructions to split the dataset.
+    Access this [rescale_anisotropic.md](rescale_anisotropic.md) file and follow to instructions to rescale the dataset.
+
+### Training models
+
+#### Preprocessing and training
+
+Given a new dataset, nnU-Net will extract a dataset fingerprint (a set of dataset-specific properties such as image sizes, voxel spacings, intensity information etc). This information is used to design three U-Net configurations. Each of these pipelines operates on its own preprocessed version of the dataset. More information is in the [documentation](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/how_to_use_nnunet.md#experiment-planning-and-preprocessing).
+
+Access this [preprocess_train_nnunet.md](preprocess_train_nnunet.md) file and follow to instructions to preprocess the dataset and train the models.
