@@ -1,6 +1,7 @@
 # Verify dataset integrity and Training
 
 ## Preprocess and train for 1x1x1
+
 ### 1. Create directory
 
 Create a folder with the resolution, for example 1x1x1 for resolution (1,1,1)
@@ -10,41 +11,41 @@ Create a folder with the resolution, for example 1x1x1 for resolution (1,1,1)
 - Create a shell script called `1_preprocessing_1x1x1`.
 - Copy the following code to start to the data preprocessing script and verify the dataset integrity.
 
-```bash
-cd ./segmentation/training/1x1x1
+    ```bash
+    cd ./segmentation/training/1x1x1
 
-# Check if the directory exists
-if [ -d "./logs" ]; then
-    echo "Directory logs already exists, skipping creation." >> "./logs/integrity.log" 2>&1
-else
-    # Attempt to create the directory
-    mkdir -p ./logs
-fi
+    # Check if the directory exists
+    if [ -d "./logs" ]; then
+        echo "Directory logs already exists, skipping creation." >> "./logs/integrity.log" 2>&1
+    else
+        # Attempt to create the directory
+        mkdir -p ./logs
+    fi
 
-echo "$(date +"%Y-%m-%d %H:%M:%S") | Initializing validation and preprocessing" >> "./logs/integrity.log" 2>&1
-mkdir nnUNet_preprocessed
-mkdir nnUNet_results
+    echo "$(date +"%Y-%m-%d %H:%M:%S") | Initializing validation and preprocessing" >> "./logs/integrity.log" 2>&1
+    mkdir nnUNet_preprocessed
+    mkdir nnUNet_results
 
 
-export nnUNet_raw='./segmentation/dataset-spider/nnUNet_raw'
-export nnUNet_preprocessed='./segmentation/training/1x1x1/nnUNet_preprocessed'
-export nnUNet_results='./segmentation/training/1x1x1/nnUNet_results'
+    export nnUNet_raw='./segmentation/dataset-spider/nnUNet_raw'
+    export nnUNet_preprocessed='./segmentation/training/1x1x1/nnUNet_preprocessed'
+    export nnUNet_results='./segmentation/training/1x1x1/nnUNet_results'
 
-echo $nnUNet_raw
-echo $nnUNet_preprocessed
-echo $nnUNet_results
+    echo $nnUNet_raw
+    echo $nnUNet_preprocessed
+    echo $nnUNet_results
 
-# load python module
-. "./segmentation/py39/etc/profile.d/conda.sh"
+    # load python module
+    . "./segmentation/py39/etc/profile.d/conda.sh"
 
-# activate corresponding environment
-conda deactivate
-conda activate ./segmentation/py39
+    # activate corresponding environment
+    conda deactivate
+    conda activate ./segmentation/py39
 
-nnUNetv2_plan_and_preprocess -d 034 --verify_dataset_integrity >> "./logs/integrity.log" 2>&1
+    nnUNetv2_plan_and_preprocess -d 034 --verify_dataset_integrity >> "./logs/integrity.log" 2>&1
 
-echo "$(date +"%Y-%m-%d %H:%M:%S") | Validation finished" >> "./logs/integrity.log" 2>&1
-```
+    echo "$(date +"%Y-%m-%d %H:%M:%S") | Validation finished" >> "./logs/integrity.log" 2>&1
+    ```
 
 ### 3. Execute preprocessing script
 
@@ -65,50 +66,55 @@ echo "$(date +"%Y-%m-%d %H:%M:%S") | Validation finished" >> "./logs/integrity.l
 
 - Create a shell script named `2_training_250e_3d_1x1x1.sh` for the training and copy the following code.
 
-```bash
-#!/usr/bin/bash
+    The training configuration is:
+      * 3D Full-Resolution  
+      * 250, 500 epochs  
+      * 1 fold
 
-#SBATCH -J "Full-1x1x1 250 Epochs 3D"   # job name
-#SBATCH --time=0-48:00:00   # walltime Mac runtime
-#SBATCH --output=./segmentation/training/1x1x1/logs/train_250e_3d_%A.out 
-#SBATCH --error=./segmentation/training/1x1x1/logs/train_250e_3d_%A.err
-#SBATCH --mem=32G
-#SBATCH --nodes=1   # number of nodes
-#SBATCH --ntasks-per-node=2
-#SBATCH --cpus-per-task=16   # number of processor cores (i.e. tasks)
-#SBATCH --gres=gpu:1  # replace 0 with 1 if gpu needed
-#SBATCH --partition=universe # you can check available partitions with "sinfo" command
-# """
-# PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-# universe*    up   infinite      5    mix apollo,atlas,chameleon,hercules,prometheus
-# universe*    up   infinite      2   idle helios,leto
-# """
+    ```bash
+    #!/usr/bin/bash
 
-# load python module
-. "./segmentation/py39/etc/profile.d/conda.sh"
+    #SBATCH -J "Full-1x1x1 250 Epochs 3D"   # job name
+    #SBATCH --time=0-48:00:00   # walltime Mac runtime
+    #SBATCH --output=./segmentation/training/1x1x1/logs/train_250e_3d_%A.out 
+    #SBATCH --error=./segmentation/training/1x1x1/logs/train_250e_3d_%A.err
+    #SBATCH --mem=32G
+    #SBATCH --nodes=1   # number of nodes
+    #SBATCH --ntasks-per-node=2
+    #SBATCH --cpus-per-task=16   # number of processor cores (i.e. tasks)
+    #SBATCH --gres=gpu:1  # replace 0 with 1 if gpu needed
+    #SBATCH --partition=universe # you can check available partitions with "sinfo" command
+    # """
+    # PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+    # universe*    up   infinite      5    mix apollo,atlas,chameleon,hercules,prometheus
+    # universe*    up   infinite      2   idle helios,leto
+    # """
 
-# activate corresponding environment
-conda deactivate
-conda activate ./segmentation/py39
+    # load python module
+    . "./segmentation/py39/etc/profile.d/conda.sh"
 
-# change directory to the script directory
-cd ./segmentation/training/1x1x1
+    # activate corresponding environment
+    conda deactivate
+    conda activate ./segmentation/py39
 
-# run the script
-export nnUNet_raw='./segmentation/dataset-spider/nnUNet_raw'
-export nnUNet_preprocessed='./segmentation/training/1x1x1/nnUNet_preprocessed'
-export nnUNet_results='./segmentation/training/1x1x1/nnUNet_results'
+    # change directory to the script directory
+    cd ./segmentation/training/1x1x1
 
-nnUNetv2_train 034 3d_fullres 0 -num_gpus 1 -tr nnUNetTrainer_250epochs
+    # run the script
+    export nnUNet_raw='./segmentation/dataset-spider/nnUNet_raw'
+    export nnUNet_preprocessed='./segmentation/training/1x1x1/nnUNet_preprocessed'
+    export nnUNet_results='./segmentation/training/1x1x1/nnUNet_results'
 
-# After running the script, check the output and error files in the logs directory. 
-```
+    nnUNetv2_train 034 3d_fullres 0 -num_gpus 1 -tr nnUNetTrainer_250epochs
+
+    # After running the script, check the output and error files in the logs directory. 
+    ```
 
 - Send the job to the Slurm Workload Manager
 
-```bash
-sbatch ./2_training_250e_3d_1x1x1.sh
-```
+    ```bash
+    sbatch ./2_training_250e_3d_1x1x1.sh
+    ```
 
 ### 5. Results
 

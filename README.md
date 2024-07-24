@@ -2,6 +2,31 @@
 
 Repository for the content of the practical course of Applied Deep Learning in Medicine (ADLM).
 
+## Table of Contents
+
+- [Project goal](#project-goal)
+- [Overview](#overview)
+    - [Diagram](#diagram)
+- [Dataset](#dataset)
+- [Prerequisites](#prerequisites)
+- [Setup](#setup)
+    - [Setup the environment](#setup-the-environment)
+    - [Preprocessing](#preprocessing)
+        - [Merge modalities](#merge-modalities)
+        - [Reorient the data](#reorient-the-data)
+        - [nnU-Net dataset format](#nnu-net-dataset-format)
+        - [Convert labels](#convert-labels)
+            - [Intermediate steps](#intermediate-steps)
+        - [Resample/Rescale images](#resamplerescale-images)
+    - [Training models](#training-models)
+        - [Preprocessing and training](#preprocessing-and-training)
+    - [Evaluation process](#evaluation-process)
+        - [Inference](#inference)
+        - [Restore native resolution](#restore-native-resolution)
+        - [Evaluation script](#evaluation-script)
+        - [Plots](#plots)
+
+
 ## Project goal
 
 Evaluate the impact of image resolution on segmentation accuracy with different resolutions generated from the SPIDER dataset (Semantic Segmentation + Instance Segmentation).
@@ -212,3 +237,23 @@ Some intermediate steps have to be done.
 Given a new dataset, nnU-Net will extract a dataset fingerprint (a set of dataset-specific properties such as image sizes, voxel spacings, intensity information etc). This information is used to design three U-Net configurations. Each of these pipelines operates on its own preprocessed version of the dataset. More information is in the [documentation](https://github.com/MIC-DKFZ/nnUNet/blob/master/documentation/how_to_use_nnunet.md#experiment-planning-and-preprocessing).
 
 Access this [preprocess_train_nnunet.md](preprocess_train_nnunet.md) file and follow to instructions to preprocess the dataset and train the models.
+
+### Evaluation process
+
+####  Inference
+
+Run this script [inference](shell/inference/inference.sh)
+Get different resolutions
+
+#### Restore native resolution
+
+To perform the evaluation, we need to restore to the native resolution, just access this [restore_resolution.md](restore_resolution.md) file and follow to instructions to preprocess the dataset and train the models.
+
+#### Evaluation script
+
+Run the evaluation script [evaluation.py](scripts/evaluation/evaluation.py)
+The output will be the JSON files in the `scripts/evaluation/foodprints` directory. For convenience, we included the results of our experiments. The datasets are big too be included in this repository. That is why is necessary to create them, as well as the training.
+
+#### Plots
+
+For convenience, we are using a [Jupyter Notebook](scripts/plots.ipynb) to plot the results. So open this notebook and run the cells. Ensure the paths match with this repository.
