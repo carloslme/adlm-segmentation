@@ -6,26 +6,25 @@ Repository for the content of the practical course of Applied Deep Learning in M
 
 - [Project goal](#project-goal)
 - [Overview](#overview)
-    - [Diagram](#diagram)
+  - [Diagram](#diagram)
 - [Dataset](#dataset)
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
-    - [Setup the environment](#setup-the-environment)
-    - [Preprocessing](#preprocessing)
-        - [Merge modalities](#merge-modalities)
-        - [Reorient the data](#reorient-the-data)
-        - [nnU-Net dataset format](#nnu-net-dataset-format)
-        - [Convert labels](#convert-labels)
-            - [Intermediate steps](#intermediate-steps)
-        - [Resample/Rescale images](#resamplerescale-images)
-    - [Training models](#training-models)
-        - [Preprocessing and training](#preprocessing-and-training)
-    - [Evaluation process](#evaluation-process)
-        - [Inference](#inference)
-        - [Restore native resolution](#restore-native-resolution)
-        - [Evaluation script](#evaluation-script)
-        - [Plots](#plots)
-
+  - [Setup the environment](#setup-the-environment)
+  - [Preprocessing](#preprocessing)
+    - [Merge modalities](#merge-modalities)
+    - [Reorient the data](#reorient-the-data)
+    - [nnU-Net dataset format](#nnu-net-dataset-format)
+    - [Convert labels](#convert-labels)
+      - [Intermediate steps](#intermediate-steps)
+    - [Resample/Rescale images](#resamplerescale-images)
+  - [Training models](#training-models)
+    - [Preprocessing and training](#preprocessing-and-training)
+  - [Evaluation process](#evaluation-process)
+    - [Inference](#inference)
+    - [Restore native resolution](#restore-native-resolution)
+    - [Evaluation script](#evaluation-script)
+    - [Plots](#plots)
 
 ## Project goal
 
@@ -257,3 +256,13 @@ The output will be the JSON files in the `scripts/evaluation/foodprints` directo
 #### Plots
 
 For convenience, we are using a [Jupyter Notebook](scripts/plots.ipynb) to plot the results. So open this notebook and run the cells. Ensure the paths match with this repository.
+
+## Authorship
+
+This pipeline was created by
+
+- Carlos Mejia
+- Yunan Li
+- Yuki Tashiro
+
+For the practical course of Applied Deep Learning in Medicine (ADLM) at the [Technical University of Munich](https://www.tum.de/en/).
