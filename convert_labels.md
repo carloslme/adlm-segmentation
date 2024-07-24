@@ -37,10 +37,10 @@ We should see the print of files processed, and a final line that says:
     2024-07-05 17:54:22 | Initializing labels conversion
     Converting labels.
     Starting conversion
-    File processed: ./nnUNet_raw/Dataset020_SPIDER/labelsTr_tmp/sub-0112_T1w.nii.gz
-    File processed: ./nnUNet_raw/Dataset020_SPIDER/labelsTr_tmp/sub-0191_T1w.nii.gz
-    File processed: ./nnUNet_raw/Dataset020_SPIDER/labelsTr_tmp/sub-0058_T2w.nii.gz
-    File processed: ./nnUNet_raw/Dataset020_SPIDER/labelsTr_tmp/sub-0011_acq-iso_T2w.nii.gz
+    File processed: ./nnUNet_raw/Dataset000_SPIDER/labelsTr_tmp/sub-0112_T1w.nii.gz
+    File processed: ./nnUNet_raw/Dataset000_SPIDER/labelsTr_tmp/sub-0191_T1w.nii.gz
+    File processed: ./nnUNet_raw/Dataset000_SPIDER/labelsTr_tmp/sub-0058_T2w.nii.gz
+    File processed: ./nnUNet_raw/Dataset000_SPIDER/labelsTr_tmp/sub-0011_acq-iso_T2w.nii.gz
     ...
     ```
 

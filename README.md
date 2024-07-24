@@ -192,3 +192,15 @@ Some intermediate steps have to be done.
 - **Make JSON file**  
     We need to provide a JSON file with metadata to the nnUNet model to preprocess and validate the dataset.
     Access this [make_json_file.md](make_json_file.md) file and follow to instructions to make the JSON file.
+
+#### Resample/Rescale images
+
+- **Isotropic**  
+    In isotropic scaling, the voxels (volume pixels) in the image have equal dimensions in all three directions (x, y, and z).
+
+    Access this [rescale_isotropic.md](rescale_isotropic.md) file and follow to instructions to split the dataset.
+
+- **Anisotropic**  
+    In anisotropic scaling, the spacing between voxels varies between spatial dimensions.
+
+    Access this [rescale_anisotropic.md](rescale_anisotropic.md) file and follow to instructions to split the dataset.

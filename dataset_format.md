@@ -38,8 +38,8 @@ We should see the print of files processed and some messages like this:
     ```log
     2024-07-05 17:49:23 | Initializing full dataset conversion.
     2024-07-05 17:49:23 | Initializing setup
-    Directory nnUNet_raw/Dataset020_SPIDER/imagesTr created.
-    Directory nnUNet_raw/Dataset020_SPIDER/labelsTr created.
+    Directory nnUNet_raw/Dataset000_SPIDER/imagesTr created.
+    Directory nnUNet_raw/Dataset000_SPIDER/labelsTr created.
     Starting imagestTr creation for Full Dataset
 
     Processing raw images directories:   0%|          | 0/217 [00:00<?, ?it/s]
